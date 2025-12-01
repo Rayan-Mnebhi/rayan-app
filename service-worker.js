@@ -1,80 +1,78 @@
-// Service Worker para Rayan PWA
-const CACHE_NAME = 'rayan-v1';
+// SERVICE WORKER PARA RAYAN APP PWA
+console.log('[Service Worker] Iniciando...');
+
+// Nombre de cache
+const CACHE_NAME = 'rayan-app-v2';
+const BASE_PATH = '/rayan-app/';
+
+// Archivos a cachear
 const urlsToCache = [
-  './rayan-fixed.html',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png'
+    BASE_PATH,
+    BASE_PATH + 'index.html'
 ];
 
-// Instalación del Service Worker
-self.addEventListener('install', event => {
-  console.log('[Service Worker] Instalando...');
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('[Service Worker] Cacheando archivos');
-        return cache.addAll(urlsToCache);
-      })
-  );
+// Instalación del service worker
+self.addEventListener('install', (event) => {
+    console.log('[Service Worker] Instalando...');
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then((cache) => {
+                console.log('[Service Worker] Cacheando archivos');
+                return cache.addAll(urlsToCache);
+            })
+            .then(() => self.skipWaiting())
+    );
 });
 
-// Activación del Service Worker
-self.addEventListener('activate', event => {
-  console.log('[Service Worker] Activando...');
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('[Service Worker] Eliminando cache antigua:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
+// Activación del service worker
+self.addEventListener('activate', (event) => {
+    console.log('[Service Worker] Activando...');
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    if (cacheName !== CACHE_NAME) {
+                        console.log('[Service Worker] Borrando cache antiguo:', cacheName);
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        }).then(() => self.clients.claim())
+    );
 });
 
-// Interceptar peticiones
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Si está en cache, devolver cache
-        if (response) {
-          return response;
-        }
-        // Si no, hacer fetch normal
-        return fetch(event.request);
-      })
-  );
+// Interceptar peticiones de red
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        caches.match(event.request)
+            .then((response) => {
+                // Si está en cache, devolver cache
+                if (response) {
+                    console.log('[Service Worker] Sirviendo desde cache:', event.request.url);
+                    return response;
+                }
+                // Si no, buscar en red
+                return fetch(event.request)
+                    .then((response) => {
+                        // Si la respuesta es válida, cachearla
+                        if (!response || response.status !== 200 || response.type !== 'basic') {
+                            return response;
+                        }
+                        
+                        const responseToCache = response.clone();
+                        caches.open(CACHE_NAME)
+                            .then((cache) => {
+                                cache.put(event.request, responseToCache);
+                            });
+                        
+                        return response;
+                    });
+            })
+            .catch(() => {
+                // Si falla todo, devolver página cacheada
+                return caches.match(BASE_PATH + 'index.html');
+            })
+    );
 });
 
-// Manejo de notificaciones push
-self.addEventListener('push', event => {
-  console.log('[Service Worker] Push recibido');
-  
-  const options = {
-    body: event.data ? event.data.text() : 'Nueva notificación de Rayan',
-    icon: './icon-192.png',
-    badge: './icon-192.png',
-    vibrate: [200, 100, 200],
-    tag: 'rayan-notification',
-    requireInteraction: false
-  };
-
-  event.waitUntil(
-    self.registration.showNotification('Rayan', options)
-  );
-});
-
-// Click en notificación
-self.addEventListener('notificationclick', event => {
-  console.log('[Service Worker] Notificación clickeada');
-  event.notification.close();
-
-  event.waitUntil(
-    clients.openWindow('./rayan-fixed.html')
-  );
-});
+console.log('[Service Worker] Configurado y listo');
