@@ -5355,14 +5355,39 @@ Responde en español, amigable y SIEMPRE incluye acciones cuando corresponda.`;
             // Iniciar Firebase
             initFirebase();
             
-            // REGISTRAR SERVICE WORKER Y PWA
+            // REGISTRAR SERVICE WORKER INLINE (sin archivo externo)
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('service-worker.js')
+                // Código del service worker como string
+                const swCode = `
+                    console.log('[Service Worker] Instalando...');
+                    
+                    self.addEventListener('install', (event) => {
+                        console.log('[Service Worker] Instalado');
+                        self.skipWaiting();
+                    });
+                    
+                    self.addEventListener('activate', (event) => {
+                        console.log('[Service Worker] Activado');
+                        return self.clients.claim();
+                    });
+                    
+                    self.addEventListener('fetch', (event) => {
+                        // No cachear nada por ahora, solo dejar que funcione
+                        event.respondWith(fetch(event.request));
+                    });
+                `;
+                
+                // Crear blob del service worker
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+                
+                // Registrar service worker desde blob
+                navigator.serviceWorker.register(swUrl)
                     .then(registration => {
                         console.log('✅ Service Worker registrado:', registration);
                     })
                     .catch(error => {
-                        console.log('❌ Error al registrar Service Worker:', error);
+                        console.log('⚠️ Service Worker no pudo registrarse (normal en algunos navegadores):', error);
                     });
             }
             
