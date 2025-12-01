@@ -5355,14 +5355,14 @@ Responde en español, amigable y SIEMPRE incluye acciones cuando corresponda.`;
             // Iniciar Firebase
             initFirebase();
             
-            // REGISTRAR SERVICE WORKER (archivo externo)
+            // REGISTRAR SERVICE WORKER Y PWA
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('service-worker.js')
                     .then(registration => {
                         console.log('✅ Service Worker registrado:', registration);
                     })
                     .catch(error => {
-                        console.log('⚠️ Error al registrar Service Worker:', error);
+                        console.log('❌ Error al registrar Service Worker:', error);
                     });
             }
             

@@ -1,35 +1,80 @@
-// SERVICE WORKER PARA RAYAN APP PWA
-console.log('[Service Worker] Iniciando...');
+// Service Worker para Rayan PWA
+const CACHE_NAME = 'rayan-v1';
+const urlsToCache = [
+  './rayan-fixed.html',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png'
+];
 
-// Nombre de cache
-const CACHE_NAME = 'rayan-app-v1';
-
-// Instalación del service worker
-self.addEventListener('install', (event) => {
-    console.log('[Service Worker] Instalado correctamente');
-    // Forzar activación inmediata
-    self.skipWaiting();
+// Instalación del Service Worker
+self.addEventListener('install', event => {
+  console.log('[Service Worker] Instalando...');
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('[Service Worker] Cacheando archivos');
+        return cache.addAll(urlsToCache);
+      })
+  );
 });
 
-// Activación del service worker
-self.addEventListener('activate', (event) => {
-    console.log('[Service Worker] Activado correctamente');
-    // Tomar control de todas las páginas inmediatamente
-    event.waitUntil(self.clients.claim());
+// Activación del Service Worker
+self.addEventListener('activate', event => {
+  console.log('[Service Worker] Activando...');
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('[Service Worker] Eliminando cache antigua:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
 });
 
-// Interceptar peticiones de red
-self.addEventListener('fetch', (event) => {
-    // Estrategia: Network First (primero red, luego cache)
-    // Esto asegura que siempre tengas la versión más actualizada
-    event.respondWith(
-        fetch(event.request)
-            .catch(() => {
-                // Si falla la red, no hacemos nada especial por ahora
-                // Esto permite que la app funcione online sin problemas
-                return new Response('Offline', { status: 503 });
-            })
-    );
+// Interceptar peticiones
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        // Si está en cache, devolver cache
+        if (response) {
+          return response;
+        }
+        // Si no, hacer fetch normal
+        return fetch(event.request);
+      })
+  );
 });
 
-console.log('[Service Worker] Configurado y listo');
+// Manejo de notificaciones push
+self.addEventListener('push', event => {
+  console.log('[Service Worker] Push recibido');
+  
+  const options = {
+    body: event.data ? event.data.text() : 'Nueva notificación de Rayan',
+    icon: './icon-192.png',
+    badge: './icon-192.png',
+    vibrate: [200, 100, 200],
+    tag: 'rayan-notification',
+    requireInteraction: false
+  };
+
+  event.waitUntil(
+    self.registration.showNotification('Rayan', options)
+  );
+});
+
+// Click en notificación
+self.addEventListener('notificationclick', event => {
+  console.log('[Service Worker] Notificación clickeada');
+  event.notification.close();
+
+  event.waitUntil(
+    clients.openWindow('./rayan-fixed.html')
+  );
+});
