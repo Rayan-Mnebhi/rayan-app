@@ -2314,39 +2314,50 @@ Responde en español, amigable y SIEMPRE incluye acciones cuando corresponda.`;
         
         // Pre-cargar horario completo si no existe
         const defaultSchedule = [
+            // LUNES
             {id:'sch_1',subject:'Inglés',day:1,startTime:'08:15',endTime:'09:10',teacher:'Félix',room:'E2.2.9/IDIOMAS',color:'gray-light',createdAt:new Date().toISOString()},
             {id:'sch_2',subject:'Árabe',day:1,startTime:'09:10',endTime:'10:05',teacher:'Younes',room:'',color:'gray-dark',createdAt:new Date().toISOString()},
             {id:'sch_3',subject:'Dibujo Técnico',day:1,startTime:'10:05',endTime:'11:00',teacher:'Julio',room:'DIBUJ',color:'orange-light',createdAt:new Date().toISOString()},
-            {id:'sch_4',subject:'Francés',day:1,startTime:'12:15',endTime:'13:10',teacher:'Beatriz',room:'E2.2.9/IDIOMAS',color:'orange-dark',createdAt:new Date().toISOString()},
-            {id:'sch_5',subject:'Filosofía',day:1,startTime:'13:10',endTime:'13:30',teacher:'Valentín',room:'E2.2.9',color:'yellow-dark',createdAt:new Date().toISOString()},
-            {id:'sch_6',subject:'Historia',day:1,startTime:'14:25',endTime:'15:20',teacher:'Carolina',room:'E2.2.9',color:'green-light',createdAt:new Date().toISOString()},
-            {id:'sch_7',subject:'Matemáticas',day:2,startTime:'08:15',endTime:'09:10',teacher:'Federico',room:'E2.2.9',color:'red-dark',createdAt:new Date().toISOString()},
-            {id:'sch_8',subject:'Tutoría',day:2,startTime:'09:10',endTime:'10:05',teacher:'MJ',room:'E2.2.9',color:'gray-light',createdAt:new Date().toISOString()},
-            {id:'sch_9',subject:'Dibujo Técnico',day:2,startTime:'10:05',endTime:'11:00',teacher:'Julio',room:'DIBUJ',color:'orange-light',createdAt:new Date().toISOString()},
-            {id:'sch_10',subject:'Filosofía',day:2,startTime:'12:15',endTime:'13:10',teacher:'Valentín',room:'E2.2.9/IDIOMAS',color:'yellow-dark',createdAt:new Date().toISOString()},
-            {id:'sch_11',subject:'Física',day:2,startTime:'13:10',endTime:'13:30',teacher:'',room:'E2.2.9',color:'yellow-light',createdAt:new Date().toISOString()},
-            {id:'sch_12',subject:'Lengua',day:2,startTime:'13:30',endTime:'14:25',teacher:'Antonio',room:'E2.2.9',color:'blue-light',createdAt:new Date().toISOString()},
-            {id:'sch_13',subject:'Física',day:2,startTime:'14:25',endTime:'15:20',teacher:'',room:'E2.2.9',color:'yellow-light',createdAt:new Date().toISOString()},
-            {id:'sch_14',subject:'Árabe',day:3,startTime:'08:15',endTime:'09:10',teacher:'Younes',room:'',color:'gray-dark',createdAt:new Date().toISOString()},
-            {id:'sch_15',subject:'Dibujo Técnico',day:3,startTime:'09:10',endTime:'10:05',teacher:'Julio',room:'DIBUJ',color:'orange-light',createdAt:new Date().toISOString()},
-            {id:'sch_16',subject:'Lengua',day:3,startTime:'10:05',endTime:'11:00',teacher:'Antonio',room:'E2.2.9',color:'blue-light',createdAt:new Date().toISOString()},
-            {id:'sch_17',subject:'Historia',day:3,startTime:'12:15',endTime:'13:10',teacher:'Carolina',room:'E2.2.9',color:'green-light',createdAt:new Date().toISOString()},
-            {id:'sch_18',subject:'Inglés',day:3,startTime:'13:10',endTime:'13:30',teacher:'Félix',room:'E2.2.9/DIBUJ',color:'gray-light',createdAt:new Date().toISOString()},
-            {id:'sch_19',subject:'Física',day:3,startTime:'13:30',endTime:'14:25',teacher:'',room:'E2.2.9',color:'yellow-light',createdAt:new Date().toISOString()},
-            {id:'sch_20',subject:'Matemáticas',day:3,startTime:'14:25',endTime:'15:20',teacher:'Federico',room:'E2.2.9',color:'red-dark',createdAt:new Date().toISOString()},
-            {id:'sch_21',subject:'Historia',day:4,startTime:'08:15',endTime:'09:10',teacher:'Carolina',room:'E2.2.9',color:'green-light',createdAt:new Date().toISOString()},
-            {id:'sch_22',subject:'Lengua',day:4,startTime:'09:10',endTime:'10:05',teacher:'Antonio',room:'E2.2.9',color:'blue-light',createdAt:new Date().toISOString()},
-            {id:'sch_23',subject:'Dibujo Técnico',day:4,startTime:'10:05',endTime:'11:00',teacher:'Julio',room:'DIBUJ',color:'orange-light',createdAt:new Date().toISOString()},
-            {id:'sch_24',subject:'Matemáticas',day:4,startTime:'12:15',endTime:'13:10',teacher:'Federico',room:'E2.2.9',color:'red-dark',createdAt:new Date().toISOString()},
-            {id:'sch_25',subject:'Física',day:4,startTime:'13:10',endTime:'13:30',teacher:'',room:'LABQR',color:'yellow-light',createdAt:new Date().toISOString()},
-            {id:'sch_26',subject:'Filosofía',day:4,startTime:'13:30',endTime:'14:25',teacher:'Valentín',room:'E2.2.9/E2.2.10',color:'yellow-dark',createdAt:new Date().toISOString()},
-            {id:'sch_27',subject:'Árabe',day:4,startTime:'14:25',endTime:'15:20',teacher:'Younes',room:'',color:'gray-dark',createdAt:new Date().toISOString()},
-            {id:'sch_28',subject:'Lengua',day:5,startTime:'08:15',endTime:'09:10',teacher:'Antonio',room:'E2.2.9',color:'blue-light',createdAt:new Date().toISOString()},
-            {id:'sch_29',subject:'Matemáticas',day:5,startTime:'09:10',endTime:'10:05',teacher:'Federico',room:'E2.2.9',color:'red-dark',createdAt:new Date().toISOString()},
-            {id:'sch_30',subject:'Inglés',day:5,startTime:'10:05',endTime:'11:00',teacher:'Félix',room:'E2.2.9/IDIOMAS',color:'gray-light',createdAt:new Date().toISOString()},
-            {id:'sch_31',subject:'Filosofía',day:5,startTime:'12:15',endTime:'13:10',teacher:'Valentín',room:'E2.2.9/IDIOMAS',color:'yellow-dark',createdAt:new Date().toISOString()},
-            {id:'sch_32',subject:'Árabe',day:5,startTime:'13:10',endTime:'14:25',teacher:'Younes',room:'E2.2.9',color:'gray-dark',createdAt:new Date().toISOString()},
-            {id:'sch_33',subject:'Historia',day:5,startTime:'14:25',endTime:'15:20',teacher:'Carolina',room:'E2.2.9',color:'green-light',createdAt:new Date().toISOString()}
+            {id:'sch_4',subject:'Física',day:1,startTime:'11:20',endTime:'12:15',teacher:'',room:'E2.2.9',color:'yellow-light',createdAt:new Date().toISOString()},
+            {id:'sch_5',subject:'Francés',day:1,startTime:'12:15',endTime:'13:10',teacher:'Beatriz',room:'E2.2.9/IDIOMAS',color:'orange-dark',createdAt:new Date().toISOString()},
+            {id:'sch_6',subject:'Filosofía',day:1,startTime:'13:30',endTime:'14:25',teacher:'Valentín',room:'E2.2.9',color:'yellow-dark',createdAt:new Date().toISOString()},
+            {id:'sch_7',subject:'Historia',day:1,startTime:'14:25',endTime:'15:20',teacher:'Carolina',room:'E2.2.9',color:'green-light',createdAt:new Date().toISOString()},
+            
+            // MARTES
+            {id:'sch_8',subject:'Matemáticas',day:2,startTime:'08:15',endTime:'09:10',teacher:'Federico',room:'E2.2.9',color:'red-dark',createdAt:new Date().toISOString()},
+            {id:'sch_9',subject:'Tutoría',day:2,startTime:'09:10',endTime:'10:05',teacher:'MJ',room:'E2.2.9',color:'gray-light',createdAt:new Date().toISOString()},
+            {id:'sch_10',subject:'Dibujo Técnico',day:2,startTime:'10:05',endTime:'11:00',teacher:'Julio',room:'DIBUJ',color:'orange-light',createdAt:new Date().toISOString()},
+            {id:'sch_11',subject:'Francés',day:2,startTime:'11:20',endTime:'12:15',teacher:'Beatriz',room:'E2.2.9/IDIOMAS',color:'orange-dark',createdAt:new Date().toISOString()},
+            {id:'sch_12',subject:'Filosofía',day:2,startTime:'12:15',endTime:'13:10',teacher:'Valentín',room:'E2.2.9/IDIOMAS',color:'yellow-dark',createdAt:new Date().toISOString()},
+            {id:'sch_13',subject:'Lengua',day:2,startTime:'13:30',endTime:'14:25',teacher:'Antonio',room:'E2.2.9',color:'blue-light',createdAt:new Date().toISOString()},
+            {id:'sch_14',subject:'Física',day:2,startTime:'14:25',endTime:'15:20',teacher:'',room:'E2.2.9',color:'yellow-light',createdAt:new Date().toISOString()},
+            
+            // MIÉRCOLES
+            {id:'sch_15',subject:'Árabe',day:3,startTime:'08:15',endTime:'09:10',teacher:'Younes',room:'',color:'gray-dark',createdAt:new Date().toISOString()},
+            {id:'sch_16',subject:'Dibujo Técnico',day:3,startTime:'09:10',endTime:'10:05',teacher:'Julio',room:'DIBUJ',color:'orange-light',createdAt:new Date().toISOString()},
+            {id:'sch_17',subject:'Lengua',day:3,startTime:'10:05',endTime:'11:00',teacher:'Antonio',room:'E2.2.9',color:'blue-light',createdAt:new Date().toISOString()},
+            {id:'sch_18',subject:'Historia',day:3,startTime:'11:20',endTime:'12:15',teacher:'Carolina',room:'E2.2.9',color:'green-light',createdAt:new Date().toISOString()},
+            {id:'sch_19',subject:'Inglés',day:3,startTime:'12:15',endTime:'13:10',teacher:'Félix',room:'E2.2.9/DIBUJ',color:'gray-light',createdAt:new Date().toISOString()},
+            {id:'sch_20',subject:'Física',day:3,startTime:'13:30',endTime:'14:25',teacher:'',room:'E2.2.9',color:'yellow-light',createdAt:new Date().toISOString()},
+            {id:'sch_21',subject:'Matemáticas',day:3,startTime:'14:25',endTime:'15:20',teacher:'Federico',room:'E2.2.9',color:'red-dark',createdAt:new Date().toISOString()},
+            
+            // JUEVES
+            {id:'sch_22',subject:'Historia',day:4,startTime:'08:15',endTime:'09:10',teacher:'Carolina',room:'E2.2.9',color:'green-light',createdAt:new Date().toISOString()},
+            {id:'sch_23',subject:'Lengua',day:4,startTime:'09:10',endTime:'10:05',teacher:'Antonio',room:'E2.2.9',color:'blue-light',createdAt:new Date().toISOString()},
+            {id:'sch_24',subject:'Dibujo Técnico',day:4,startTime:'10:05',endTime:'11:00',teacher:'Julio',room:'DIBUJ',color:'orange-light',createdAt:new Date().toISOString()},
+            {id:'sch_25',subject:'Matemáticas',day:4,startTime:'11:20',endTime:'12:15',teacher:'Federico',room:'E2.2.9',color:'red-dark',createdAt:new Date().toISOString()},
+            {id:'sch_26',subject:'Física',day:4,startTime:'12:15',endTime:'13:10',teacher:'',room:'LABOR',color:'yellow-light',createdAt:new Date().toISOString()},
+            {id:'sch_27',subject:'Filosofía',day:4,startTime:'13:30',endTime:'14:25',teacher:'Valentín',room:'E2.2.9/E2.2.10',color:'yellow-dark',createdAt:new Date().toISOString()},
+            {id:'sch_28',subject:'Árabe',day:4,startTime:'14:25',endTime:'15:20',teacher:'Younes',room:'',color:'gray-dark',createdAt:new Date().toISOString()},
+            
+            // VIERNES
+            {id:'sch_29',subject:'Lengua',day:5,startTime:'08:15',endTime:'09:10',teacher:'Antonio',room:'E2.2.9',color:'blue-light',createdAt:new Date().toISOString()},
+            {id:'sch_30',subject:'Matemáticas',day:5,startTime:'09:10',endTime:'10:05',teacher:'Federico',room:'E2.2.9',color:'red-dark',createdAt:new Date().toISOString()},
+            {id:'sch_31',subject:'Inglés',day:5,startTime:'10:05',endTime:'11:00',teacher:'Félix',room:'E2.2.9/IDIOMAS',color:'gray-light',createdAt:new Date().toISOString()},
+            {id:'sch_32',subject:'Francés',day:5,startTime:'11:20',endTime:'12:15',teacher:'Beatriz',room:'E2.2.9/DIBUJ',color:'orange-dark',createdAt:new Date().toISOString()},
+            {id:'sch_33',subject:'Árabe',day:5,startTime:'12:15',endTime:'13:10',teacher:'Younes',room:'E2.2.9',color:'gray-dark',createdAt:new Date().toISOString()},
+            {id:'sch_34',subject:'Filosofía',day:5,startTime:'13:30',endTime:'14:25',teacher:'Valentín',room:'E2.2.9/IDIOMAS',color:'yellow-dark',createdAt:new Date().toISOString()},
+            {id:'sch_35',subject:'Historia',day:5,startTime:'14:25',endTime:'15:20',teacher:'Carolina',room:'E2.2.9',color:'green-light',createdAt:new Date().toISOString()}
         ];
         
         let schedule = JSON.parse(localStorage.getItem(SCHEDULE_KEY)) || [];
@@ -5355,14 +5366,14 @@ Responde en español, amigable y SIEMPRE incluye acciones cuando corresponda.`;
             // Iniciar Firebase
             initFirebase();
             
-            // REGISTRAR SERVICE WORKER Y PWA
+            // REGISTRAR SERVICE WORKER (archivo externo)
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('service-worker.js')
                     .then(registration => {
                         console.log('✅ Service Worker registrado:', registration);
                     })
                     .catch(error => {
-                        console.log('❌ Error al registrar Service Worker:', error);
+                        console.log('⚠️ Error al registrar Service Worker:', error);
                     });
             }
             
